@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import '../domain/quiz.dart';
-
+import '../data/QuizRepository.dart';
 class QuizConsole {
   Quiz quiz;
 
@@ -26,18 +26,20 @@ class QuizConsole {
 
         // Check for null input
         if (userInput != null && userInput.isNotEmpty) {
-          Answer answer = Answer(question: question, answerChoice: userInput);
+          Answer answer = Answer(questionID: question.id, answerChoice: userInput);
           player.addAnswer(answer);
         } else {
           print('No answer entered. Skipping question.');
         }
       }
       quiz.addPlayer(player);
-      print('${player.name}, your score in Percentage: ${player.getResult()[0]} %');
-      print('${player.name}, your score in Point :${player.getResult()[1]}');
+      print('${player.name}, your score in Percentage: ${player.getResult(quiz)[0]} %');
+      print('${player.name}, your score in Point :${player.getResult(quiz)[1]}');
       for (Player player in quiz.players) {
-        print('Player: ${player.name}\t\t\tScore: ${player.getResult()[1]}');
+        print('Player: ${player.name}\t\t\tScore: ${player.getResult(quiz)[1]}');
       }
+      QuizRepository repo = QuizRepository('data/quiz.json');
+        repo.writeQuiz(quiz);
     }
   }
 }

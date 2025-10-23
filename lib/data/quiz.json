@@ -1,0 +1,77 @@
+{
+  "id": "quiz-1",
+  "questions": [
+    {
+      "id": "q1",
+      "title": "What is 2 + 2?",
+      "choices": [
+        "3",
+        "4",
+        "5"
+      ],
+      "goodChoice": "4",
+      "point": 10
+    },
+    {
+      "id": "q2",
+      "title": "What color is the sky?",
+      "choices": [
+        "Blue",
+        "Green",
+        "Red"
+      ],
+      "goodChoice": "Blue",
+      "point": 5
+    }
+  ],
+  "players": [
+    {
+      "id": "p1",
+      "name": "Alice",
+      "answers": [
+        {
+          "id": "a1",
+          "questionID": "q1",
+          "answerChoice": "4"
+        },
+        {
+          "id": "a2",
+          "questionID": "q2",
+          "answerChoice": "Blue"
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "name": "Bob",
+      "answers": [
+        {
+          "id": "a3",
+          "questionID": "q1",
+          "answerChoice": "3"
+        },
+        {
+          "id": "a4",
+          "questionID": "q2",
+          "answerChoice": "Green"
+        }
+      ]
+    },
+    {
+      "id": "6937d283-61e1-43cf-9103-e8128b194fdb",
+      "name": "Menghan",
+      "answers": [
+        {
+          "id": "656da7c3-d9c3-4244-8189-b6d704673b5c",
+          "questionID": "q1",
+          "answerChoice": "4"
+        },
+        {
+          "id": "9c38ca26-32b4-4f63-b766-de55ff263138",
+          "questionID": "q2",
+          "answerChoice": "5"
+        }
+      ]
+    }
+  ]
+}

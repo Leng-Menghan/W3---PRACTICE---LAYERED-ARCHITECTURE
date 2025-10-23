@@ -1,32 +1,39 @@
+import 'package:uuid/uuid.dart';
+
+var uuid = Uuid();
 class Question {
+  final String id;
   final String title;
   final List<String> choices;
   final String goodChoice;
   final int point;
 
-  Question(
-      {required this.title,
+  Question({
+      String? id,
+      required this.title,
       required this.choices,
       required this.goodChoice,
-      required this.point});
+      required this.point}) : this.id = id ?? uuid.v4();
 }
 
 class Answer {
-  final Question question;
+  final String id;
+  final String questionID;
   final String answerChoice;
 
-  Answer({required this.question, required this.answerChoice});
+  Answer({String? id, required this.questionID, required this.answerChoice}) : this.id = id ?? uuid.v4();
 
-  bool isGood() {
+  bool isGood(Question question) {
     return this.answerChoice == question.goodChoice;
   }
 }
 
 class Quiz {
+  String id;
   List<Question> questions;
   List<Player> players = [];
 
-  Quiz({required this.questions});
+  Quiz({String?id, required this.questions}) : this.id = id ?? uuid.v4();
 
   void addPlayer(Player player) {
     bool found = false;
@@ -41,27 +48,37 @@ class Quiz {
       players.add(player);
     }
   }
+
+  Question? getQuestionByID(String id) {
+    return questions.firstWhere((element) => element.id == id);
+  }
+
 }
 
 class Player {
+  String id;
   String name;
   List<Answer> answers = [];
 
-  Player({required this.name});
+  Player({String? id,required this.name}) : this.id = id ?? uuid.v4();
 
   void addAnswer(Answer asnwer) {
     this.answers.add(asnwer);
   }
 
-  List<int> getResult() {
+  List<int> getResult(Quiz quiz) {
     int totalScore = 0;
     int totalPoint = 0;
     for (Answer answer in answers) {
-      if (answer.isGood()) {
-        totalScore += answer.question.point;
+      if (answer.isGood(quiz.getQuestionByID(answer.questionID)!)) {
+        totalScore += quiz.getQuestionByID(answer.questionID)!.point;
       }
-      totalPoint+= answer.question.point;
+      totalPoint+= quiz.getQuestionByID(answer.questionID)!.point;
     }
     return [((totalScore / totalPoint) * 100).toInt(), totalScore];
+  }
+
+  Answer getAnswerByID(String id) {
+    return answers.firstWhere((element) => element.id == id);
   }
 }

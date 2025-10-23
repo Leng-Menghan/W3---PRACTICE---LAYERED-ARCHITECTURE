@@ -57,4 +57,29 @@ class QuizRepository {
 
     return quiz;
   }
+
+  void writeQuiz(Quiz quiz) {
+    Map<String, dynamic> data = {
+      'id': quiz.id,
+      'questions': quiz.questions.map((q) => {
+            'id': q.id,
+            'title': q.title,
+            'choices': q.choices,
+            'goodChoice': q.goodChoice,
+            'point': q.point,
+          }).toList(),
+      'players': quiz.players.map((p) => {
+            'id': p.id,
+            'name': p.name,
+            'answers': p.answers.map((a) => {
+                  'id': a.id,
+                  'questionID': a.questionID,
+                  'answerChoice': a.answerChoice,
+                }).toList(),
+          }).toList(),
+    };
+
+    final file = File(filePath);
+    file.writeAsStringSync(JsonEncoder.withIndent('  ').convert(data));
+  }
 }
